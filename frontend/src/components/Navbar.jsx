@@ -32,7 +32,7 @@ export default function Navbar() {
               Home
             </Link>
 
-            <Link to="/course" className="text-indigo-600 font-medium">
+            <Link to="/course" className="text-gray-600 hover:text-indigo-600 transition font-medium">
               Courses
             </Link>
 
