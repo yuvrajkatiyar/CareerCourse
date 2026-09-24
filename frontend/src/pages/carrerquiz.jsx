@@ -57,7 +57,49 @@ const questions = [
   //     },
   //   ],
   // },
+  // {
+  //   id: 2,
+  //   question: "What is your experience level?",
+  //   options: [
+  //     {
+  //       value: "Beginner",
+  //       label: "Complete Beginner",
+  //       icon: "🌱",
+  //     },
+  //     {
+  //       value: "Intermediate",
+  //       label: "Intermediate",
+  //       icon: "📚",
+  //     },
+  //     {
+  //       value: "Advanced",
+  //       label: "Advanced",
+  //       icon: "🚀",
+  //     },
+  //   ],
+  // },
 
+  // {
+  //   id: 3,
+  //   question: "What is your main goal?",
+  //   options: [
+  //     {
+  //       value: "career-change",
+  //       label: "Change Career",
+  //       icon: "🔄",
+  //     },
+  //     {
+  //       value: "upskill",
+  //       label: "Learn New Skills",
+  //       icon: "⬆️",
+  //     },
+  //     {
+  //       value: "freelance",
+  //       label: "Freelancing",
+  //       icon: "💼",
+  //     },
+  //   ],
+  // },
   // {
   //   id: 3,
   //   question: "What is your main goal?",
@@ -405,3 +447,4 @@ export default function CareerQuizPage() {
     </div>
   );
 }
+
