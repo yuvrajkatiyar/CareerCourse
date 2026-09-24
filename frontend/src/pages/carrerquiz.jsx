@@ -157,6 +157,7 @@ export default function CareerQuizPage() {
         description: `Recommended learning path for ${answers[1]}.`,
 
         skills: skillsByCareer[answers[1]] || [],
+        
       });
       setShowResult(true);
       fetchRecommendedCourses(answers[1], answers[2]);
