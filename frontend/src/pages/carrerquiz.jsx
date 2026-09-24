@@ -42,49 +42,49 @@ const questions = [
     ],
   },
 
-  {
-    id: 2,
-    question: "What is your experience level?",
-    options: [
-      {
-        value: "Beginner",
-        label: "Complete Beginner",
-        icon: "🌱",
-      },
-      {
-        value: "Intermediate",
-        label: "Intermediate",
-        icon: "📚",
-      },
-      {
-        value: "Advanced",
-        label: "Advanced",
-        icon: "🚀",
-      },
-    ],
-  },
+  // {
+  //   id: 2,
+  //   question: "What is your experience level?",
+  //   options: [
+  //     {
+  //       value: "Beginner",
+  //       label: "Complete Beginner",
+  //       icon: "🌱",
+  //     },
+  //     {
+  //       value: "Intermediate",
+  //       label: "Intermediate",
+  //       icon: "📚",
+  //     },
+  //     {
+  //       value: "Advanced",
+  //       label: "Advanced",
+  //       icon: "🚀",
+  //     },
+  //   ],
+  // },
 
-  {
-    id: 3,
-    question: "What is your main goal?",
-    options: [
-      {
-        value: "career-change",
-        label: "Change Career",
-        icon: "🔄",
-      },
-      {
-        value: "upskill",
-        label: "Learn New Skills",
-        icon: "⬆️",
-      },
-      {
-        value: "freelance",
-        label: "Freelancing",
-        icon: "💼",
-      },
-    ],
-  },
+  // {
+  //   id: 3,
+  //   question: "What is your main goal?",
+  //   options: [
+  //     {
+  //       value: "career-change",
+  //       label: "Change Career",
+  //       icon: "🔄",
+  //     },
+  //     {
+  //       value: "upskill",
+  //       label: "Learn New Skills",
+  //       icon: "⬆️",
+  //     },
+  //     {
+  //       value: "freelance",
+  //       label: "Freelancing",
+  //       icon: "💼",
+  //     },
+  //   ],
+  // },
 ];
 
 
@@ -335,6 +335,12 @@ export default function CareerQuizPage() {
                         </span>
                         <span>{course.duration}</span>
                       </div>
+                      <Link
+                        to={`/courses/${course._id}`}
+                        className="block w-full text-center mt-5 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+                      >
+                        View Course
+                      </Link>
                     </div>
                   ))}
                 </div>
