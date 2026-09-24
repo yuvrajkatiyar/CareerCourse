@@ -11,7 +11,7 @@ A full-stack web app that helps students and professionals discover online cours
 
 - **Browse courses** with search and filters for platform, level, category and minimum rating
 - **Course details page** with instructor, duration, rating, price and an Enroll button that opens the course on its original platform
-- **Career quiz** — three questions (interest, experience level, goal) that return recommended courses from the catalog
+- **Career quiz** —  questions  that return recommended courses from the catalog
 - **Authentication** — register and log in with email and password (JWT-based)
 - **Admin dashboard** to add, edit and delete courses
 - **Static pages:** About, Contact, Privacy Policy and Disclaimer
