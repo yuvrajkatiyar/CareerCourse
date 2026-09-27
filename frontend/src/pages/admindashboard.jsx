@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Pencil, Trash2, Plus } from "lucide-react";
 
-const token = localStorage.getItem("token");
 
 export default function AdminDashboard() {
   const token = localStorage.getItem("token");
