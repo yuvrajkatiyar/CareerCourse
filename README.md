@@ -3,7 +3,7 @@
 A full-stack web app that helps students and professionals discover online courses from platforms like Udemy, Coursera and YouTube, and find a learning path through a short career quiz.
 
 **Live demo:** [Career Course Website](https://career-course12.vercel.app/)  
-**Admin Dashboard:** [Admin Dashboard](https://career-course12.vercel.app/admindashboard)
+
 <img width="1915" height="971" alt="image" src="https://github.com/user-attachments/assets/95c3cbd0-f413-4399-a400-70f4294b67e6" />
 
 
