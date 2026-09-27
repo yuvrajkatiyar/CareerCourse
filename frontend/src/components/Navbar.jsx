@@ -64,6 +64,7 @@ export default function Navbar() {
                 onClick={() => {
                   localStorage.removeItem("token");
                   localStorage.removeItem("name");
+                  localStorage.removeItem("role");
                   window.location.reload();
                 }}
                 className="

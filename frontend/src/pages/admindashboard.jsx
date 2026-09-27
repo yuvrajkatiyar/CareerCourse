@@ -34,13 +34,13 @@ export default function AdminDashboard() {
     description: "",
   });
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("name");
-    localStorage.removeItem("role");
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("name");
+  //   localStorage.removeItem("role");
 
-    window.location.href = "/admin-login";
-  };
+  //   window.location.href = "/login";
+  // };
 
   // FETCH COURSES
 
@@ -220,12 +220,12 @@ export default function AdminDashboard() {
           <h1 className="text-4xl font-bold">Admin Dashboard</h1>
 
           <p className="text-white mt-2">Manage all courses dynamically</p>
-          <button
+          {/* <button
             onClick={handleLogout}
             className="mt-6 bg-white text-indigo-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition"
           >
             Logout
-          </button>
+          </button> */}
         </div>
 
         {/* FORM */}
