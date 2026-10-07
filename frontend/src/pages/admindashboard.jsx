@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Pencil, Trash2, Plus } from "lucide-react";
+import { apiUrl } from "../api";
 
 
 export default function AdminDashboard() {
@@ -7,6 +8,7 @@ export default function AdminDashboard() {
   const [courses, setCourses] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const [editingId, setEditingId] = useState(null);
 
@@ -47,14 +49,23 @@ export default function AdminDashboard() {
   const fetchCourses = async () => {
     try {
       const response = await fetch(
-        "https://careercourse-3dj3.onrender.com/api/courses",
+        apiUrl("/api/courses"),
       );
+
+      if (!response.ok) {
+        throw new Error(`Unable to load courses (${response.status}).`);
+      }
 
       const data = await response.json();
 
+      if (!Array.isArray(data)) {
+        throw new Error("Unexpected response while loading courses.");
+      }
+
       setCourses(data);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to fetch courses", error);
+      setError(error.message || "Unable to load courses.");
     } finally {
       setLoading(false);
     }
@@ -78,13 +89,13 @@ export default function AdminDashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
       if (editingId) {
         // UPDATE
-        console.log(editingId);
         const response = await fetch(
-          `https://careercourse-3dj3.onrender.com/api/courses/${editingId}`,
+          apiUrl(`/api/courses/${editingId}`),
           {
             method: "PUT",
 
@@ -99,14 +110,14 @@ export default function AdminDashboard() {
 
         const data = await response.json();
 
-        console.log(data);
-
-        await fetchCourses();
+        if (!response.ok) {
+          throw new Error(data.message || "Unable to update the course.");
+        }
       } else {
         // CREATE
 
-        await fetch(
-          "https://careercourse-3dj3.onrender.com/api/courses",
+        const response = await fetch(
+          apiUrl("/api/courses"),
 
           {
             method: "POST",
@@ -119,6 +130,12 @@ export default function AdminDashboard() {
             body: JSON.stringify(formData),
           },
         );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Unable to create the course.");
+        }
       }
 
       setFormData({
@@ -147,18 +164,21 @@ export default function AdminDashboard() {
 
       setEditingId(null);
 
-      fetchCourses();
+      await fetchCourses();
     } catch (error) {
-      console.log(error);
+      console.error("Failed to save course", error);
+      setError(error.message || "Unable to save the course.");
     }
   };
 
   // DELETE COURSE
 
   const handleDelete = async (id) => {
+    setError("");
+
     try {
-      await fetch(
-        `https://careercourse-3dj3.onrender.com/api/courses/${id}`,
+      const response = await fetch(
+        apiUrl(`/api/courses/${id}`),
 
         {
           method: "DELETE",
@@ -169,9 +189,16 @@ export default function AdminDashboard() {
         },
       );
 
-      fetchCourses();
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Unable to delete the course.");
+      }
+
+      await fetchCourses();
     } catch (error) {
-      console.log(error);
+      console.error("Failed to delete course", error);
+      setError(error.message || "Unable to delete the course.");
     }
   };
 
@@ -227,6 +254,12 @@ export default function AdminDashboard() {
             Logout
           </button> */}
         </div>
+
+        {error && (
+          <p role="alert" className="m-4 rounded-xl bg-red-100 p-4 text-red-700">
+            {error}
+          </p>
+        )}
 
         {/* FORM */}
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiUrl } from "../api";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function AdminLogin() {
 
     try {
       const response = await fetch(
-        "https://careercourse-3dj3.onrender.com/api/auth/login",
+        apiUrl("/api/auth/login"),
         {
           method: "POST",
 

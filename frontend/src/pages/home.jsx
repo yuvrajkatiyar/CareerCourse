@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { useState, useEffect } from "react";
+import { apiUrl } from "../api";
 
 const categories = [
   {
@@ -116,7 +117,7 @@ export default function HomePage() {
     const fetchTopCourses = async () => {
       try {
         const response = await fetch(
-          "https://careercourse-3dj3.onrender.com/api/courses"
+          apiUrl("/api/courses")
         );
 
         const data = await response.json();

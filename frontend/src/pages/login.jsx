@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useState } from "react";
+import { apiUrl } from "../api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ export default function Login() {
 
     try {
       const response = await fetch(
-        "https://careercourse-3dj3.onrender.com/api/auth/login",
+        apiUrl("/api/auth/login"),
 
         {
           method: "POST",
@@ -29,8 +30,6 @@ export default function Login() {
       );
 
       const data = await response.json();
-
-      console.log(data);
 
       if (response.ok) {
         localStorage.setItem("token", data.token);

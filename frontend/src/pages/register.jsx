@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { apiUrl } from "../api";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -11,7 +12,7 @@ export default function Register() {
 
     try {
       const response = await fetch(
-        "https://careercourse-3dj3.onrender.com/api/auth/register",
+        apiUrl("/api/auth/register"),
         {
           method: "POST",
           headers: {

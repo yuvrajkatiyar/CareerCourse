@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Star, Clock } from "lucide-react";
+import { apiUrl } from "../api";
 
 function CourseDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [course, setCourse] = useState(null);
 
@@ -26,7 +28,7 @@ function CourseDetails() {
     const fetchCourse = async () => {
       try {
         const response = await fetch(
-          `https://careercourse-3dj3.onrender.com/api/courses/${id}`,
+          apiUrl(`/api/courses/${id}`),
         );
 
         const data = await response.json();

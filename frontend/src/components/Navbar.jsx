@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { GraduationCap } from "lucide-react";
 
-const token = localStorage.getItem("token");
-const name = localStorage.getItem("name");
-
 export default function Navbar() {
+  const location = useLocation();
+  const token = localStorage.getItem("token");
+  const name = localStorage.getItem("name");
+
   return (
-    <nav className="sticky top-0 z-50 w-full bg-gray-100 border-b shadow-sm overflow-hidden">
+    <nav
+      data-current-path={location.pathname}
+      className="sticky top-0 z-50 w-full bg-gray-100 border-b shadow-sm overflow-hidden"
+    >
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-2 sm:gap-4 min-h-16">
 

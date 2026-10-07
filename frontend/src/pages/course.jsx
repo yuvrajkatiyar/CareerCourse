@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 
 import { Link, useSearchParams } from "react-router-dom";
 
-import { Star, Clock, Heart, GitCompare, Filter, X } from "lucide-react";
+import { Star, Clock, Filter, X } from "lucide-react";
+import { apiUrl } from "../api";
 
 export default function CoursesPage() {
   const [searchParams] = useSearchParams();
   const [allCourses, setAllCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const search = searchParams.get("search");
-  console.log(search);
 
   //   const {
   //     addToWishlist,
@@ -43,34 +44,47 @@ export default function CoursesPage() {
   });
 
   useEffect(() => {
-    // console.log(url);
     const fetchCourses = async () => {
+      setLoading(true);
+      setError("");
+
       try {
-        let url = "https://careercourse-3dj3.onrender.com/api/courses";
+        const query = new URLSearchParams();
 
         if (search) {
-          url += `?search=${search}`;
+          query.set("search", search);
         }
 
+        const queryString = query.toString();
+        const url = `${apiUrl("/api/courses")}${queryString ? `?${queryString}` : ""}`;
         const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`Unable to load courses (${response.status}).`);
+        }
 
         const data = await response.json();
 
+        if (!Array.isArray(data)) {
+          throw new Error("Unexpected response while loading courses.");
+        }
+
         setAllCourses(data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch courses", error);
+        setError(error.message || "Unable to load courses.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchCourses();
-  }, []);
+  }, [search]);
 
   const filteredCourses = allCourses.filter((course) => {
     if (
       filters.search &&
-      !course.title.toLowerCase().includes(filters.search.toLowerCase())
+      !(course.title || "").toLowerCase().includes(filters.search.toLowerCase())
     )
       return false;
 
@@ -298,70 +312,78 @@ export default function CoursesPage() {
               </button>
             </div>
 
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredCourses.map((course) => (
-                <div
-                  key={course._id}
-                  className="bg-card rounded-xl overflow-hidden border border-border hover:shadow-lg transition-all duration-300 group"
-                >
-                  {/* IMAGE */}
+            {loading ? (
+              <p className="text-muted-foreground">Loading courses...</p>
+            ) : error ? (
+              <p role="alert" className="text-red-600">{error}</p>
+            ) : filteredCourses.length === 0 ? (
+              <p className="text-muted-foreground">No courses found.</p>
+            ) : (
+              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {filteredCourses.map((course) => (
+                  <div
+                    key={course._id}
+                    className="bg-card rounded-xl overflow-hidden border border-border hover:shadow-lg transition-all duration-300 group"
+                  >
+                    {/* IMAGE */}
 
-                  <div className="relative h-48 overflow-hidden">
-                    <Link to={`/courses/${course._id}`}>
-                      <img
-                        src={course.image}
-                        alt={course.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                    </Link>
+                    <div className="relative h-48 overflow-hidden">
+                      <Link to={`/courses/${course._id}`}>
+                        <img
+                          src={course.image}
+                          alt={course.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </Link>
 
-                    <div className="absolute top-3 right-3 bg-white/90 px-2 py-1 rounded-lg text-sm font-medium">
-                      {course.price === 0 ? "Free" : `${course.price}Rs`}
-                    </div>
-                  </div>
-
-                  {/* CONTENT */}
-
-                  <div className="p-4">
-                    <div className="text-xs text-primary font-medium mb-2">
-                      {course.platform}
-                    </div>
-
-                    <Link to={`/courses/${course._id}`}>
-                      <h3 className="text-sm font-medium mb-2 line-clamp-2 hover:text-primary transition-colors">
-                        {course.title}
-                      </h3>
-                    </Link>
-
-                    <p className="text-xs text-muted-foreground mb-3">
-                      {course.instructor}
-                    </p>
-
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-
-                        <span className="font-medium">{course.rating}</span>
-
-                        <span>({course.reviews?.toLocaleString() || 0})</span>
+                      <div className="absolute top-3 right-3 bg-white/90 px-2 py-1 rounded-lg text-sm font-medium">
+                        {course.price === 0 ? "Free" : `${course.price}Rs`}
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-1 text-muted-foreground">
-                        <Clock className="w-3 h-3" />
+                    {/* CONTENT */}
 
-                        <span>{course.duration}</span>
+                    <div className="p-4">
+                      <div className="text-xs text-primary font-medium mb-2">
+                        {course.platform}
                       </div>
 
-                      <span className="px-2 py-1 bg-accent rounded text-xs">
-                        {course.level}
-                      </span>
+                      <Link to={`/courses/${course._id}`}>
+                        <h3 className="text-sm font-medium mb-2 line-clamp-2 hover:text-primary transition-colors">
+                          {course.title}
+                        </h3>
+                      </Link>
+
+                      <p className="text-xs text-muted-foreground mb-3">
+                        {course.instructor}
+                      </p>
+
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
+                        <div className="flex items-center gap-1">
+                          <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+
+                          <span className="font-medium">{course.rating}</span>
+
+                          <span>({course.reviews?.toLocaleString() || 0})</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-1 text-muted-foreground">
+                          <Clock className="w-3 h-3" />
+
+                          <span>{course.duration}</span>
+                        </div>
+
+                        <span className="px-2 py-1 bg-accent rounded text-xs">
+                          {course.level}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

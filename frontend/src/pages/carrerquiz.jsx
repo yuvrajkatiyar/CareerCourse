@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { ArrowRight, ArrowLeft, CheckCircle } from "lucide-react";
+import { apiUrl } from "../api";
 
 const questions = [
   {
@@ -223,7 +224,7 @@ export default function CareerQuizPage() {
       }
 
       const url =
-        "https://careercourse-3dj3.onrender.com/api/courses" +
+        apiUrl("/api/courses") +
         (params.toString() ? `?${params.toString()}` : "");
 
       const response = await fetch(url);
@@ -288,7 +289,7 @@ export default function CareerQuizPage() {
 
             <div className="flex gap-4">
               <Link
-                to="/courses"
+                to="/course"
                 className="px-6 py-3 bg-indigo-600 text-white rounded-xl"
               >
                 Browse Courses
@@ -351,7 +352,7 @@ export default function CareerQuizPage() {
               ) : (
                 <p className="text-gray-500">
                   No matching courses were found.{" "}
-                  <Link to="/courses" className="text-indigo-600">
+                  <Link to="/course" className="text-indigo-600">
                     Browse all courses
                   </Link>
                   .
@@ -446,4 +447,3 @@ export default function CareerQuizPage() {
     </div>
   );
 }
-
