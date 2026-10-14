@@ -126,5 +126,3 @@ The app runs at `http://localhost:5173`.
 ## Author
 
 **Yuvraj Katiyar** — [@yuvrajkatiyar](https://github.com/yuvrajkatiyar)
-**Mantu Kumar** — 
-**Sudeep Kumar** — 
